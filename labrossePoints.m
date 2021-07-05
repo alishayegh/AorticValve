@@ -1,4 +1,6 @@
 function labrossePoints(x0, input)
+	% Returns the coordinates of points A and B in Figures 
+	% 2 and 3, Labrosse et al (2006).
 	% x0 = [d0, X_S, alpha]
     %input.Lf = 30.2; input.H = 17; input.Lh = 12.8;
 	%input.Rb = 12.7; input.Rc = 12.15;
