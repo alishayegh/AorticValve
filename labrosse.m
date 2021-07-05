@@ -1,12 +1,23 @@
 function  x=labrosse (x0, input, DISP)
-	% calculates the geometric parameters for a closed/
-	% open aortic valve.
-	% x0 = [d0, X_S, alpha]
-    %input.Lf = 30.2; input.H = 17; input.Lh = 12.8;
-	%input.Rb = 12.7; input.Rc = 12.15;
+	%% Description
+	% Calculates the geometric parameters for a closed/
+	% open aortic valve based on the following paper:
+    % "Geometric modeling of functional trileaflet aortic
+    % valves: Development and clinical applications",
+	% Labrosse et al, 2006.
+
+	%% Usage 
+	% In the command window run the following:
+	% >> x0 = [1,1,.1];
+	% >> input.Rb = 26/2; input.Rc = 12;
+	% >> input.Lf = 30; input.H = 16.8; input.Lh = 17;
+	% >> labrosse(x0, input, 1);
+	% "input" parameters are taken from Fig 4, labrosse
+	% et al (2006). The results match very well with
+	% the results given under that figure.
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	clc
-    %options = optimoptions('fsolve','Display','none',...
-	%'PlotFcn',@optimplotfirstorderopt);	
+	% x0 = [d0, X_S, alpha]
 	d0 = x0(1); X_sa0 = [x0(2), x0(3)];
 
 	% Calculate d
@@ -41,8 +52,10 @@ function F = solveD(x)
 	% This function will be used by fsolve, so I could
 	% not find a way in order to provide "input" as an
 	% input argument. Therefore I define it explicitly:
-    input.Lf = 30.2; input.H = 17; input.Lh = 12.8;
-	input.Rb = 12.7; input.Rc = 12.15;
+	input.Rb = 26/2; input.Rc = 12;
+    input.Lf = 30; input.H = 16.8; input.Lh = 17;
+    %input.Lf = 30.2; input.H = 17; input.Lh = 12.8;
+	%input.Rb = 12.7; input.Rc = 12.15;
 	%d: x(1)
 	if input.Lf <= pi * sqrt(3) / 2 * input.Rc
 		F(1) = input.Lf - 2*sqrt(x(1)^2 + 3*input.Rc ^ 2/4)*...
@@ -82,8 +95,10 @@ function F = solveX_sa(x)
 	% This function will be used by fsolve, so I could
 	% not find a way in order to provide "input" as an
 	% input argument. Therefore I define it explicitly:
-    input.Lf = 30.2; input.H = 17; input.Lh = 12.8;
-	input.Rb = 12.7; input.Rc = 12.15;
+	input.Rb = 26/2; input.Rc = 12;
+    input.Lf = 30; input.H = 16.8; input.Lh = 17;
+    %input.Lf = 30.2; input.H = 17; input.Lh = 12.8;
+	%input.Rb = 12.7; input.Rc = 12.15;
 	%alpha: x(6)
 	%X_S: x(7)
 	F(1) = -input.Lh + x(1) + input.Rb / cos(x(2));

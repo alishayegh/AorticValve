@@ -1,11 +1,19 @@
 function labrossePoints(x0, input)
-	% Returns the coordinates of points A and B in Figures 
-	% 2 and 3, Labrosse et al (2006).
-	% x0 = [d0, X_S, alpha]
-    %input.Lf = 30.2; input.H = 17; input.Lh = 12.8;
-	%input.Rb = 12.7; input.Rc = 12.15;
-	% x = [d, R, X_B, beta, Omega, X_Sa, H_S];
-	% Note: X_Sa = [X_S, alpha]
+	%% Description
+	% Returns the coordinates of points A and B in Figs 
+	% 2 and 3, Labrosse et al ("Geometric modeling of
+	% functional trileaflet aortic valves: Development and
+	% clinical applications", 2006).
+
+	%% Usage 
+	% In the command window run the following:
+	% >> x0 = [1,1,.1];
+	% >> input.Rb = 26/2; input.Rc = 12;
+	% >> input.Lf = 30; input.H = 16.8; input.Lh = 17;
+	% >> labrossePoints(x0, input);
+	% "input" parameters are taken from Fig 4, labrosse
+	% et al (2006). 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	x = labrosse(x0, input, 0);
 	disp('A : (')
 	disp(input.Rb - (input.H - x(6))*cot(x(7)/2 + pi/4 + x(4)/2)...
