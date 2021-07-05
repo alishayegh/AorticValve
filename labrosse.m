@@ -1,32 +1,30 @@
 function  x=labrosse (x0, input, DISP)
-%function x = labrosse (x0)
-%function x = labrosse (status, x0)
 	% calculates the geometric parameters for a closed/
 	% open aortic valve.
 	% x0 = [d0, X_S, alpha]
     %input.Lf = 30.2; input.H = 17; input.Lh = 12.8;
 	%input.Rb = 12.7; input.Rc = 12.15;
-
-	% A good approximation for x0:
-	% x0 = [12,12,.01,11,.44,.12] % angle in radians
-
 	clc
-    %if strcmpi(status, 'closed')
-	   % fun = @closed;
-    %elseif strcmpi(status, 'open')
-	   % fun = @openn;
-    %end
-
-    options = optimoptions('fsolve','Display','none',...
-	'PlotFcn',@optimplotfirstorderopt);	
-	%x = fsolve(fun, x0, options);
+    %options = optimoptions('fsolve','Display','none',...
+	%'PlotFcn',@optimplotfirstorderopt);	
 	d0 = x0(1); X_sa0 = [x0(2), x0(3)];
+
+	% Calculate d
 	d = fsolve(@solveD, d0);
+
+	% Calculate R, X_B, beta and Omega
 	[R, X_B, beta, Omega] = solveRX_BbO(d, input);
+
+	% Calculate X_S and alpha
 	X_Sa = fsolve(@solveX_sa, X_sa0);
-	%x = fsolve(fun, x0);
+
+	% Calculate H_S
 	[H_S] = solveH_S(input, X_Sa(2), beta);
+
+	% Output
 	x = [d, R, X_B, beta, Omega, X_Sa, H_S];
+
+	% Show the results in command window
     if DISP
 		disp('d = '); disp(d);
 		disp('R = '); disp(R);
@@ -39,8 +37,10 @@ function  x=labrosse (x0, input, DISP)
 	end
 end
 
-%function F = closed(x, input)
 function F = solveD(x)
+	% This function will be used by fsolve, so I could
+	% not find a way in order to provide "input" as an
+	% input argument. Therefore I define it explicitly:
     input.Lf = 30.2; input.H = 17; input.Lh = 12.8;
 	input.Rb = 12.7; input.Rc = 12.15;
 	%d: x(1)
@@ -79,6 +79,9 @@ function [R, X_B, beta, Omega] = solveRX_BbO(d, input)
 end
 
 function F = solveX_sa(x)
+	% This function will be used by fsolve, so I could
+	% not find a way in order to provide "input" as an
+	% input argument. Therefore I define it explicitly:
     input.Lf = 30.2; input.H = 17; input.Lh = 12.8;
 	input.Rb = 12.7; input.Rc = 12.15;
 	%alpha: x(6)
@@ -94,46 +97,4 @@ function H_S = solveH_S(input, alpha, beta)
 	% of the valve.
 	H_S = input.H - (input.Rb - input.Rc/2) * ...
 	tan((alpha + beta + pi/2)/2);
-end
-
-function F = openn(x)
-%x0 = [12,12,.01,.44,.12];
-	%input
-	%	Lf
-	%	Lh
-	%	H
-	%	Rc
-	%	Rb
-	%output
-	%	x1 = p
-	%	x2 = R
-	%	x3 = Xz
-	%	%x4 = Ch 
-	%	x4 = alpha % open
-	%	%x5 = beta % closed
-	%	x5 = gamma
-
-    input.Lf = 30.2; input.H = 22; input.Lh = 12.8;
-	input.Rb = 12.7; input.Rc = 12.15;
-
-    F(1) = input.Lf - 2 * sqrt( (x(1))^2 + 3/4 * ...
-	(input.Rc)^2 ) * atan(input.Rc * sqrt(3) / (2*x(1)));
-    F(2) = x(2) - sqrt( (x(1))^2 + 3/4 * ...
-	(input.Rc)^2 );
-	F(3) = x(3) - x(2) + x(1);
-	%F(4) = (input.Lf)^2 - 4*((input.Rc)^2 + (input.H -...
-	%x(4) - input.Rb*tan(x(5)))^2);
-	F(4) = x(4) - asin(...
-	(x(3)*cos(x(5)) - (input.Rb - input.Rc/2))...
-	/...
-	input.Lh...
-	);
-	F(5) = x(5) - asin(...
-	((input.Lh)^2 - ((input.Rb - input.Rc/2)^2 + ...
-	(input.H)^2 + (x(3))^2))...
-	/...
-	(2*x(3)*sqrt((input.H)^2 + ...
-	(input.Rb - input.Rc/2) ^2))...
-	) - ...
-	atan((input.Rb - input.Rc / 2) / input.H);
 end
