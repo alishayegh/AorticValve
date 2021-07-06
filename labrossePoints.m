@@ -21,6 +21,6 @@ function labrossePoints(x0, input)
 	disp(')');
 
 	disp('B : (')
-	disp(.5 * input.Rc - x(3) * cos(x(5)))
+	disp(.5 * input.Rc + x(3) * cos(x(5)))
 	disp(0), disp(input.H + x(3)*sin(x(5)))
 	disp(')');
