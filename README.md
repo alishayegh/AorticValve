@@ -19,7 +19,7 @@ valves: Development and clinical applications",
  the results given under that figure.
 
 ## labrossePoints.m
- Returns the coordinates of points A and B in Figs 
+ Returns the coordinates of point B and the angle of attachment line to the basal planein Figs 
  2 and 3, Labrosse et al ("Geometric modeling of
  functional trileaflet aortic valves: Development and
  clinical applications", 2006).
