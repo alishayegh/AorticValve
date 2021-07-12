@@ -9,10 +9,10 @@ valves: Development and clinical applications",
 ### Usage 
  In the command window run the following:
  ```matlab
- >> x0 = [1,1,.1];
- >> input.Rb = 26/2; input.Rc = 12;
- >> input.Lf = 30; input.H = 16.8; input.Lh = 17;
- >> labrosse(x0, input, 1);
+ x0 = [1,1,.1];
+ input.Rb = 26/2; input.Rc = 12;
+ input.Lf = 30; input.H = 16.8; input.Lh = 17;
+ labrosse(x0, input, 1);
  ```
  `input` parameters are taken from Fig 4, labrosse
  et al (2006). The results match very well with
@@ -25,12 +25,12 @@ valves: Development and clinical applications",
  clinical applications", 2006).
 
 ### Usage 
-```matlab
  In the command window run the following:
- >> x0 = [1,1,.1];
- >> input.Rb = 26/2; input.Rc = 12;
- >> input.Lf = 30; input.H = 16.8; input.Lh = 17;
- >> labrossePoints(x0, input);
+ ```matlab
+ x0 = [1,1,.1];
+ input.Rb = 26/2; input.Rc = 12;
+ input.Lf = 30; input.H = 16.8; input.Lh = 17;
+ labrossePoints(x0, input);
  ```
  `input` parameters are taken from Fig 4, labrosse
  et al (2006). 
